@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northridge Middle School GC Memories</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .school-logo {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .school-logo:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .speech-section {
+            background: rgba(20, 30, 50, 0.9);
+            border: 2px solid #ffd700;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            animation: fadeInUp 1.5s ease-out 0.5s both;
+            backdrop-filter: blur(10px);
+        }
+
+        .speech-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #e0e6ed;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .friends-section {
+            margin-top: 60px;
+            animation: fadeInUp 1.5s ease-out 1s both;
+        }
+
+        .friends-title {
+            font-size: 3rem;
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .friends-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .friend-card {
+            background: rgba(20, 30, 50, 0.9);
+            border: 2px solid #ffd700;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transition: all 0.4s ease;
+            max-width: 400px;
+            flex: 1;
+            min-width: 350px;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.2);
+            border-color: #fff;
+        }
+
+        .friend-image {
+            width: 250px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .friend-image:hover {
+            transform: scale(1.05);
+        }
+
+        .friend-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .friend-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e6ed;
+            font-style: italic;
+        }
+
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(20, 30, 50, 0.95);
+            border: 2px solid #ffd700;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .audio-embed {
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .audio-embed iframe {
+            border-radius: 15px;
+        }
+
+        .audio-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .audio-btn {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border: none;
+            color: #1a1a2e;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #ffed4e, #ffd700);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .audio-btn:active {
+            transform: translateY(0);
+        }
+
+        .audio-btn.playing {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            animation: pulse-red 1.5s infinite;
+        }
+
+        .vocaroo-link {
+            color: #ffd700;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-align: center;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .vocaroo-link:hover {
+            color: #fff;
+        }
+
+        .audio-status {
+            text-align: center;
+            color: #e0e6ed;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes pulse-red {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            }
+            50% {
+                box-shadow: 0 6px 25px rgba(255, 107, 107, 0.6);
+            }
+        }
+
+        /* Cursor Confetti Effects */
+        .confetti-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: confetti-fall 1.5s ease-out forwards;
+        }
+
+        .confetti-star {
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            border-radius: 0;
+            width: 12px;
+            height: 12px;
+        }
+
+        .confetti-triangle {
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-radius: 0;
+            width: 10px;
+            height: 10px;
+        }
+
+        .confetti-square {
+            border-radius: 2px;
+            width: 8px;
+            height: 8px;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100px) rotate(360deg) scale(0.3);
+            }
+        }
+
+        /* Congratulations Banner */
+        .congrats-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: banner-show 4s ease-out forwards;
+        }
+
+        .congrats-text {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6);
+            animation: congrats-glow 2s ease-in-out infinite alternate, congrats-bounce 1s ease-out;
+            transform-origin: center;
+        }
+
+        .congrats-subtext {
+            font-size: 1.5rem;
+            color: #e0e6ed;
+            margin-top: 20px;
+            text-align: center;
+            animation: fadeInUp 2s ease-out 1s both;
+        }
+
+        @keyframes banner-show {
+            0% {
+                opacity: 1;
+                visibility: visible;
+            }
+            70% {
+                opacity: 1;
+                visibility: visible;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes congrats-glow {
+            0% {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6);
+            }
+            100% {
+                text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.8), 0 0 80px rgba(255, 215, 0, 0.4);
+            }
+        }
+
+        @keyframes congrats-bounce {
+            0% {
+                transform: scale(0.3) translateY(-100px);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced Background Animations */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float-around 20s infinite linear;
+        }
+
+        .floating-shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .floating-shape:nth-child(2) {
+            top: 70%;
+            left: 80%;
+            animation-delay: -5s;
+            animation-duration: 30s;
+        }
+
+        .floating-shape:nth-child(3) {
+            top: 30%;
+            left: 70%;
+            animation-delay: -10s;
+            animation-duration: 35s;
+        }
+
+        .floating-shape:nth-child(4) {
+            top: 80%;
+            left: 20%;
+            animation-delay: -15s;
+            animation-duration: 28s;
+        }
+
+        @keyframes float-around {
+            0% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateX(100px) translateY(-50px) rotate(90deg);
+            }
+            50% {
+                transform: translateX(200px) translateY(100px) rotate(180deg);
+            }
+            75% {
+                transform: translateX(-100px) translateY(150px) rotate(270deg);
+            }
+            100% {
+                transform: translateX(0) translateY(0) rotate(360deg);
+            }
+        }
+
+        /* Enhanced Glow Effects */
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glow-effect:hover::before {
+            opacity: 0.7;
+            animation: glow-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .friends-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .friend-card {
+                min-width: 300px;
+            }
+            
+            .speech-section {
+                padding: 25px;
+            }
+            
+            .speech-text {
+                font-size: 1.1rem;
+            }
+
+            .audio-control {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+            }
+
+            .audio-buttons {
+                flex-direction: column;
+            }
+
+            .congrats-text {
+                font-size: 2.5rem;
+            }
+
+            .congrats-subtext {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Congratulations Banner -->
+    <div class="congrats-banner" id="congratsBanner">
+        <div>
+            <div class="congrats-text">🎓 Congratulations Class of 2025! 🎓</div>
+            <div class="congrats-subtext">Celebrating Your Amazing Journey at Northridge Middle School</div>
+        </div>
+    </div>
+
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes">
+        <div class="floating-shape" style="font-size: 3rem; color: #ffd700;">🎓</div>
+        <div class="floating-shape" style="font-size: 2rem; color: #ffed4e;">⭐</div>
+        <div class="floating-shape" style="font-size: 2.5rem; color: #ffd700;">🏆</div>
+        <div class="floating-shape" style="font-size: 1.8rem; color: #ffed4e;">✨</div>
+    </div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1 class="main-title">Northridge Middle School GC Memories</h1>
+            <img src="https://cdn.discordapp.com/attachments/1370940722018123930/1382082671508848702/MS-Northridge_1.png?ex=6849dc4a&is=68488aca&hm=13bbc65c860a886aae2f99a5218e7adc9e6532b67c818fb07d103f398f124b9c&" 
+                 alt="Northridge Middle School Logo" 
+                 class="school-logo"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center;">
+                <p>🏫 NRMS Logo</p>
+                <p style="font-size:0.8em;">Image not loading - check URL</p>
+            </div>
+        </div>
+
+        <!-- Speech Section -->
+        <div class="speech-section">
+            <p class="speech-text">
+                Thank you all for these memories all these moments i loved every single moment rather it was arguments or when we had fun memories all of it were memories that we had threwout this school year from 6th to 8th grade althought we met in 7th grade we had these memories and been homeboys for about 2 years now and i hope we can keep being friends and i love you all
+            </p>
+        </div>
+
+        <!-- Friends Section -->
+        <div class="friends-section">
+            <h2 class="friends-title">All Friends</h2>
+            
+            <div class="friends-grid">
+                <!-- Darell's Card -->
+                <div class="friend-card glow-effect">
+                    <img src="https://cdn.discordapp.com/attachments/1370940722018123930/1382075660935233697/IMG_7613.jpg?ex=6849d5c3&is=68488443&hm=c0666fdd5de75ae96e425e2bbad376e6127cf9e6e26b316c35c080e1e0332f74&" 
+                         alt="Darell Goodwin The Second" 
+                         class="friend-image"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center; width:250px; height:300px; display:none; align-items:center; justify-content:center;">
+                        <div>
+                            <p>📷 Darell's Photo</p>
+                            <p style="font-size:0.8em;">Image not loading</p>
+                        </div>
+                    </div>
+                    <h3 class="friend-name">Darell Goodwin The Second</h3>
+                    <p class="friend-description">
+                        This is Darell one of my closest friends at northridge and one of my closest he has been the friend we had arguments with and had fun moments with but in the end we had so much fun together and ill miss him.
+                    </p>
+                </div>
+
+                <!-- Samy's Card -->
+                <div class="friend-card glow-effect">
+                    <img src="https://cdn.discordapp.com/attachments/1370940722018123930/1382075612721840290/BE638BCA-90B3-46E1-A700-A74A7FEC386C.jpg?ex=6849d5b7&is=68488437&hm=3f6b99c67d7673fae87e4e80c38dd26a4f9e674324a3cf3ce732c2dab572fd75&" 
+                         alt="Samy Kabeya" 
+                         class="friend-image"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center; width:250px; height:300px; align-items:center; justify-content:center;">
+                        <div>
+                            <p>📷 Samy's Photo</p>
+                            <p style="font-size:0.8em;">Image not loading</p>
+                        </div>
+                    </div>
+                    <h3 class="friend-name">Samy Kabeya</h3>
+                    <p class="friend-description">
+                        This is Samy Kabeya one of my closest friends and someone i had fun memories with and arguments with and in the end i enjoyed all those moments and ill miss him.
+                    </p>
+                </div>
+
+                <!-- Daniel's Card -->
+                <div class="friend-card glow-effect">
+                    <img src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/505439138_1427169858408032_2992013017824830275_n.jpg?stp=dst-jpg_p480x480_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=Mzreps1S3lQQ7kNvwG1zmXZ&_nc_oc=AdkVZrD6V5r_EkJrS-w7VdfxXrWGkWDLLZEaJuS0XkvPnKiHcf3u3XH9am517e5PM6n6vC4TdzT7CRPlsNuBBFiO&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD2gH_uJmQReSRRj0TkYehvcn3RImjWqxEYtUzGqRnf6Y9Lw&oe=686FE3A7" 
+                         alt="Devious Daniel" 
+                         class="friend-image"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center; width:250px; height:300px; align-items:center; justify-content:center;">
+                        <div>
+                            <p>📷 Daniel's Photo</p>
+                            <p style="font-size:0.8em;">Image not loading</p>
+                        </div>
+                    </div>
+                    <h3 class="friend-name">Devious Daniel</h3>
+                    <p class="friend-description">
+                        This is Daniel one of my close friends which im pretty sure i met in 6th grade hes a cool guy besides he got nutmegged by me in soccer like 3 years ago.
+                    </p>
+                </div>
+
+                <!-- Lyco's Card -->
+                <div class="friend-card glow-effect">
+                    <img src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/495073104_1817970472081076_2039929598899656029_n.jpg?stp=dst-jpg_p480x480_tt6&_nc_cat=111&ccb=1-7&_nc_sid=0024fc&_nc_ohc=m3GdTwXkFBsQ7kNvwGue1gU&_nc_oc=AdkAMXjOvMH4KQL6ePYRuYJiuIu_FiyP7ohEaEfftNwu4Fxr5bKULyVtYD2v_hBkzhLrEsTKDzDeZsSJjaZFYumX&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD2gHcun1JlKPqYaCn0aqagY9tCddNJgFuq15_y7i-jLeEgg&oe=68700EB5" 
+                         alt="Lyco" 
+                         class="friend-image"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center; width:250px; height:300px; align-items:center; justify-content:center;">
+                        <div>
+                            <p>📷 Lyco's Photo</p>
+                            <p style="font-size:0.8em;">Image not loading</p>
+                        </div>
+                    </div>
+                    <h3 class="friend-name">Lyco</h3>
+                    <p class="friend-description">
+                        This is lyco he is one of my close friends i met in 8th grade i like his outfits and hes a cool guy overall.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Control Panel -->
+    <div class="audio-control">
+        <div class="audio-status" id="audioStatus">🎵 Background Music</div>
+        <div class="audio-embed">
+            <iframe id="audioFrame" width="300" height="60" src="https://vocaroo.com/embed/1qsOxlcSlXhK?autoplay=0" frameborder="0" allow="autoplay"></iframe>
+        </div>
+        <div class="audio-buttons">
+            <button class="audio-btn" id="playBtn" onclick="playAudio()">▶️ Play</button>
+            <button class="audio-btn" id="pauseBtn" onclick="pauseAudio()" style="display:none;">⏸️ Pause</button>
+            <button class="audio-btn" id="muteBtn" onclick="toggleMute()">🔇 Mute</button>
+        </div>
+        <a href="https://voca.ro/1qsOxlcSlXhK" class="vocaroo-link" target="_blank">View on Vocaroo &gt;&gt;</a>
+    </div>
+
+    <script>
+        // Confetti cursor trail effect
+        const colors = ['#ffd700', '#ffed4e', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd'];
+        const shapes = ['confetti-particle', 'confetti-star', 'confetti-triangle', 'confetti-square'];
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let isMouseMoving = false;
+        let confettiInterval;
+
+        // Track mouse movement
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            if (!isMouseMoving) {
+                isMouseMoving = true;
+                startConfetti();
+            }
+        });
+
+        // Stop confetti when mouse stops moving
+        document.addEventListener('mousemove', debounce(function() {
+            isMouseMoving = false;
+            stopConfetti();
+        }, 150));
+
+        function startConfetti() {
+            if (confettiInterval) return;
+            
+            confettiInterval = setInterval(createConfetti, 50);
+        }
+
+        function stopConfetti() {
+            if (confettiInterval) {
+                clearInterval(confettiInterval);
+                confettiInterval = null;
+            }
+        }
+
+        function createConfetti() {
+            if (!isMouseMoving) return;
+            
+            const confetti = document.createElement('div');
+            const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            confetti.className = randomShape;
+            confetti.style.backgroundColor = randomColor;
+            confetti.style.left = (mouseX - 4) + 'px';
+            confetti.style.top = (mouseY - 4) + 'px';
+            
+            // Add some randomness to position
+            const offsetX = (Math.random() - 0.5) * 40;
+            const offsetY = (Math.random() - 0.5) * 40;
+            confetti.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            
+            document.body.appendChild(confetti);
+            
+            // Remove confetti after animation
+            setTimeout(() => {
+                if (confetti.parentNode) {
+                    confetti.parentNode.removeChild(confetti);
+                }
+            }, 1500);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Hide congratulations banner after animation
+        setTimeout(() => {
+            const banner = document.getElementById('congratsBanner');
+            if (banner) {
+                banner.style.display = 'none';
+            }
+        }, 4000);
+
+        // Add staggered animation to friend cards
+        const friendCards = document.querySelectorAll('.friend-card');
+        friendCards.forEach((card, index) => {
+            card.style.animationDelay = `${1.5 + (index * 0.3)}s`;
+        });
+
+        // Audio control variables
+        let isPlaying = false;
+        let isMuted = false;
+        const audioFrame = document.getElementById('audioFrame');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const audioStatus = document.getElementById('audioStatus');
+
+        // Play audio function
+        function playAudio() {
+            if (!isPlaying) {
+                // Change iframe src to autoplay version
+                audioFrame.src = 'https://vocaroo.com/embed/1qsOxlcSlXhK?autoplay=1';
+                
+                playBtn.style.display = 'none';
+                pauseBtn.style.display = 'inline-block';
+                pauseBtn.classList.add('playing');
+                
+                audioStatus.textContent = '🎵 Now Playing...';
+                isPlaying = true;
+            }
+        }
+
+        // Pause audio function
+        function pauseAudio() {
+            if (isPlaying) {
+                // Change iframe src to non-autoplay version (effectively stops it)
+                audioFrame.src = 'https://vocaroo.com/embed/1qsOxlcSlXhK?autoplay=0';
+                
+                pauseBtn.style.display = 'none';
+                playBtn.style.display = 'inline-block';
+                pauseBtn.classList.remove('playing');
+                
+                audioStatus.textContent = '🎵 Background Music';
+                isPlaying = false;
+            }
+        }
+
+        // Toggle mute function
+        function toggleMute() {
+            if (!isMuted) {
+                audioFrame.style.display = 'none';
+                muteBtn.textContent = '🔊 Unmute';
+                muteBtn.style.background = 'linear-gradient(135deg, #ff6b6b, #ff8e8e)';
+                audioStatus.textContent = '🔇 Audio Muted';
+                isMuted = true;
+            } else {
+                audioFrame.style.display = 'block';
+                muteBtn.textContent = '🔇 Mute';
+                muteBtn.style.background = 'linear-gradient(135deg, #ffd700, #ffed4e)';
+                audioStatus.textContent = isPlaying ? '🎵 Now Playing...' : '🎵 Background Music';
+                isMuted = false;
+            }
+        }
+
+        // Auto-play on page load (with user interaction)
+        window.addEventListener('load', function() {
+            // Add click event to document to enable autoplay after user interaction
+            document.addEventListener('click', function() {
+                if (!isPlaying) {
+                    playAudio();
+                }
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
