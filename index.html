@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GC Social</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>GC Forum</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
-            display: flex;
         }
 
         /* Login Page Styles */
@@ -27,7 +25,6 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            width: 100%;
         }
 
         .login-box {
@@ -122,50 +119,9 @@
         /* Main Forum Styles */
         .forum-container {
             display: none;
-            width: 100%;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            gap: 20px;
-        }
-
-        .app-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr 350px;
-            gap: 20px;
-            height: calc(100vh - 40px);
-        }
-
-        .sidebar-left {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            height: 100%;
-            overflow-y: auto;
-        }
-
-        .main-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            height: 100%;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar-right {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            height: 100%;
-            overflow-y: auto;
         }
 
         .forum-header {
@@ -175,7 +131,6 @@
             border-radius: 15px;
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            display: none;
         }
 
         .user-welcome {
@@ -183,7 +138,6 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            margin-bottom: 20px;
         }
 
         .user-info {
@@ -230,6 +184,20 @@
         .logout-btn:hover {
             background: #c0392b;
             transform: translateY(-1px);
+        }
+
+        .forum-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+        }
+
+        .main-forum {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .post-composer {
@@ -284,7 +252,6 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            flex: 1;
         }
 
         .post {
@@ -303,15 +270,8 @@
         .post-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 10px;
             margin-bottom: 15px;
-        }
-
-        .post-header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .post-avatar {
@@ -333,12 +293,6 @@
         .post-author {
             font-weight: 600;
             color: #333;
-            cursor: pointer;
-        }
-
-        .post-author:hover {
-            color: #764ba2;
-            text-decoration: underline;
         }
 
         .post-time {
@@ -366,9 +320,6 @@
             cursor: pointer;
             font-size: 0.9rem;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
         .action-btn:hover {
@@ -384,11 +335,16 @@
             color: #28a745;
         }
 
-        .delete-btn {
-            color: #e74c3c;
+        /* Sidebar Styles */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
         }
 
-        /* Sidebar Styles */
         .sidebar-section {
             margin-bottom: 25px;
         }
@@ -398,9 +354,6 @@
             color: #764ba2;
             margin-bottom: 15px;
             font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .notification {
@@ -410,12 +363,6 @@
             padding: 10px;
             margin-bottom: 10px;
             font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .notification:hover {
-            transform: translateX(3px);
         }
 
         .notification.mention {
@@ -439,24 +386,12 @@
             gap: 10px;
             padding: 8px 0;
             border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-        }
-
-        .online-user:hover {
-            background-color: #f8f9fa;
         }
 
         .online-indicator {
             width: 8px;
             height: 8px;
             background: #28a745;
-            border-radius: 50%;
-        }
-
-        .offline-indicator {
-            width: 8px;
-            height: 8px;
-            background: #e74c3c;
             border-radius: 50%;
         }
 
@@ -505,289 +440,20 @@
             color: #666;
         }
 
-        /* Navigation Styles */
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-
-        .nav-item:hover {
-            background-color: #f0f2f5;
-        }
-
-        .nav-item.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .nav-item i {
-            font-size: 1.2rem;
-        }
-
-        /* Profile Styles */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 2rem;
-        }
-
-        .profile-details h2 {
-            color: #764ba2;
-            margin-bottom: 5px;
-        }
-
-        .profile-status {
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .profile-bio {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .message-btn {
-            padding: 8px 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Messages Styles */
-        .messages-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .message-thread {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .message-thread:hover {
-            background-color: #f0f2f5;
-        }
-
-        .message-thread.active {
-            background-color: #e6e9ff;
-        }
-
-        .message-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .message-info {
-            flex: 1;
-        }
-
-        .message-sender {
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .message-preview {
-            font-size: 0.9rem;
-            color: #666;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 200px;
-        }
-
-        .message-time {
-            font-size: 0.8rem;
-            color: #999;
-        }
-
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .chat-header {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 12px 15px;
-            border-radius: 18px;
-            position: relative;
-        }
-
-        .message.sent {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .message.received {
-            align-self: flex-start;
-            background: #f0f2f5;
-            color: #333;
-            border-bottom-left-radius: 4px;
-        }
-
-        .message-time-stamp {
-            font-size: 0.7rem;
-            margin-top: 5px;
-            text-align: right;
-            opacity: 0.8;
-        }
-
-        .message-input-container {
-            display: flex;
-            padding: 15px;
-            border-top: 1px solid #eee;
-            gap: 10px;
-        }
-
-        .message-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            font-size: 1rem;
-        }
-
-        .message-send-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .no-chat-selected {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            color: #666;
-            padding: 20px;
-        }
-
-        .no-chat-selected i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #764ba2;
-            opacity: 0.5;
-        }
-
-        .chat-back-btn {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            margin-right: 10px;
-            color: #764ba2;
-        }
-
-        .active-now-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .active-now-title {
-            font-weight: 600;
-            color: #764ba2;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         /* Responsive Design */
-        @media (max-width: 1100px) {
-            .app-layout {
-                grid-template-columns: 250px 1fr;
-            }
-            .sidebar-right {
-                display: none;
-            }
-        }
-
         @media (max-width: 768px) {
-            .app-layout {
+            .forum-content {
                 grid-template-columns: 1fr;
             }
-            .sidebar-left {
-                display: none;
+            
+            .user-welcome {
+                flex-direction: column;
+                gap: 15px;
             }
-            .forum-header {
-                display: block;
+            
+            .login-box {
+                margin: 10px;
+                padding: 30px 20px;
             }
         }
     </style>
@@ -796,8 +462,8 @@
     <!-- Login Page -->
     <div id="loginPage" class="login-container">
         <div class="login-box">
-            <h1 class="login-title">GC Social</h1>
-            <p class="login-subtitle">Connect with your friends</p>
+            <h1 class="login-title">GC Forum</h1>
+            <p class="login-subtitle">Welcome to the Group Chat</p>
             
             <form id="loginForm">
                 <div class="form-group">
@@ -832,156 +498,31 @@
             </div>
         </div>
 
-        <div class="app-layout">
-            <!-- Left Sidebar Navigation -->
-            <div class="sidebar-left">
-                <div class="nav-item active" data-tab="forum">
-                    <i class="fas fa-home"></i>
-                    <span>Forum Feed</span>
-                </div>
-                <div class="nav-item" data-tab="messages">
-                    <i class="fas fa-comments"></i>
-                    <span>Messages</span>
-                </div>
-                <div class="nav-item" data-tab="profile">
-                    <i class="fas fa-user"></i>
-                    <span>My Profile</span>
+        <div class="forum-content">
+            <div class="main-forum">
+                <div class="post-composer">
+                    <textarea id="postContent" class="composer-textarea" placeholder="What's on your mind?"></textarea>
+                    <button onclick="createPost()" class="post-btn" id="postBtn">Post Message</button>
                 </div>
                 
+                <div id="postsContainer" class="posts-container">
+                    <div class="loading">Loading posts...</div>
+                </div>
+            </div>
+
+            <div class="sidebar">
                 <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-users"></i>
-                        <span>Online Friends</span>
-                    </h3>
+                    <h3 class="sidebar-title">Notifications</h3>
+                    <div id="notificationsContainer">
+                        <p style="color: #666; font-size: 0.9rem;">No new notifications</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Online Users</h3>
                     <ul id="onlineUsers" class="online-users">
                         <div class="loading">Loading users...</div>
                     </ul>
-                </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="main-content">
-                <!-- Forum Tab -->
-                <div id="forumTab" class="tab-content">
-                    <div class="post-composer">
-                        <textarea id="postContent" class="composer-textarea" placeholder="What's on your mind?"></textarea>
-                        <button onclick="createPost()" class="post-btn" id="postBtn">Post Message</button>
-                    </div>
-                    
-                    <div id="postsContainer" class="posts-container">
-                        <div class="loading">Loading posts...</div>
-                    </div>
-                </div>
-
-                <!-- Messages Tab -->
-                <div id="messagesTab" class="tab-content" style="display: none;">
-                    <div class="messages-container" id="conversationsList">
-                        <!-- Conversations will be populated dynamically -->
-                    </div>
-                    
-                    <div id="chatContainer" class="chat-container" style="display: none;">
-                        <div class="chat-header">
-                            <button class="chat-back-btn" onclick="showConversations()">
-                                <i class="fas fa-arrow-left"></i>
-                            </button>
-                            <div class="user-avatar" id="chatPartnerAvatar"></div>
-                            <div>
-                                <h3 id="chatPartnerName"></h3>
-                                <p id="chatPartnerStatus" style="font-size: 0.8rem; color: #666;"></p>
-                            </div>
-                        </div>
-                        
-                        <div id="chatMessages" class="chat-messages">
-                            <!-- Messages will appear here -->
-                        </div>
-                        
-                        <div class="message-input-container">
-                            <input type="text" id="messageInput" class="message-input" placeholder="Type a message...">
-                            <button id="sendMessageBtn" class="message-send-btn">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div id="noConversations" class="no-chat-selected">
-                        <i class="fas fa-comments"></i>
-                        <h3>Your Messages</h3>
-                        <p>Select a conversation or start a new one</p>
-                    </div>
-                </div>
-
-                <!-- Profile Tab -->
-                <div id="profileTab" class="tab-content" style="display: none;">
-                    <div class="profile-header">
-                        <div class="profile-avatar" id="profileAvatar"></div>
-                        <div class="profile-details">
-                            <h2 id="profileUsername"></h2>
-                            <p class="profile-status" id="profileStatus"></p>
-                            <button id="profileMessageBtn" class="message-btn" style="display: none;">
-                                <i class="fas fa-envelope"></i>
-                                <span>Send Message</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="profile-bio">
-                        <h3>About Me</h3>
-                        <p id="profileBio">I'm a member of the GC community. Love connecting with friends and sharing ideas!</p>
-                        <textarea id="bioEditor" class="composer-textarea" placeholder="Edit your bio..." style="display: none; min-height: 80px;"></textarea>
-                        <button id="editBioBtn" class="post-btn" style="margin-top: 10px;">
-                            <i class="fas fa-edit"></i>
-                            Edit Bio
-                        </button>
-                        <button id="saveBioBtn" class="post-btn" style="display: none; margin-top: 10px;">
-                            <i class="fas fa-save"></i>
-                            Save Bio
-                        </button>
-                    </div>
-                    
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-history"></i>
-                        <span>My Recent Posts</span>
-                    </h3>
-                    <div id="userPosts" class="posts-container">
-                        <p>No posts yet</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Sidebar -->
-            <div class="sidebar-right">
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-bell"></i>
-                        <span>Notifications</span>
-                    </h3>
-                    <div id="notificationsContainer">
-                        <p id="noNotifications" style="color: #666; font-size: 0.9rem;">No new notifications</p>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-bolt"></i>
-                        <span>Active Now</span>
-                    </h3>
-                    <div class="active-now-container">
-                        <div class="active-now-title">
-                            <i class="fas fa-circle" style="color: #28a745;"></i>
-                            <span>Online Now</span>
-                        </div>
-                        <ul id="activeUsers" class="online-users">
-                            <!-- Active users will be populated dynamically -->
-                        </ul>
-                        
-                        <div class="active-now-title" style="margin-top: 15px;">
-                            <i class="fas fa-circle" style="color: #e74c3c;"></i>
-                            <span>Recently Active</span>
-                        </div>
-                        <ul id="recentUsers" class="online-users">
-                            <!-- Recently active users will be populated dynamically -->
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1009,7 +550,7 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // User database with new users
+        // User database
         const users = {
             'Darell': { password: 'gcuser', status: 'Original GC Member', role: 'founder' },
             'Samy': { password: 'gcuser', status: 'Original GC Member', role: 'founder' },
@@ -1017,26 +558,18 @@
             'Marlon': { password: 'gcuser', status: 'GC Founder', role: 'founder' },
             'Mohy': { password: 'gcuser', status: 'GC Founder', role: 'founder' },
             'Daniel': { password: 'gcuser', status: 'New GC Member', role: 'member' },
-            'Tristian': { password: 'gcuser', status: 'Old GC Member', role: 'member' },
-            'Prince': { password: 'gcuser', status: 'New GC Member', role: 'member' },
-            'Tyrell': { password: 'gcuser', status: 'New GC Member', role: 'member' }
+            'Tristian': { password: 'gcuser', status: 'Old GC Member', role: 'member' }
         };
 
         // Global variables
         let currentUser = null;
         let unsubscribePosts = null;
         let unsubscribeUsers = null;
-        let unsubscribeMessages = null;
-        let unsubscribeNotifications = null;
-        let currentChatPartner = null;
 
         // Initialize Firebase Auth
         auth.onAuthStateChanged((user) => {
             if (user && currentUser) {
                 console.log('Firebase user authenticated:', user.uid);
-                // Restore session on refresh
-                showForum();
-                loadRealtimeData();
             }
         });
 
@@ -1116,14 +649,6 @@
             document.getElementById('userAvatar').textContent = currentUser.username[0].toUpperCase();
             document.getElementById('welcomeMessage').textContent = `Welcome, ${currentUser.username}!`;
             document.getElementById('userStatus').textContent = currentUser.status;
-            
-            // Set profile info
-            document.getElementById('profileAvatar').textContent = currentUser.username[0].toUpperCase();
-            document.getElementById('profileUsername').textContent = currentUser.username;
-            document.getElementById('profileStatus').textContent = currentUser.status;
-            
-            // Setup navigation
-            setupNavigation();
         }
 
         async function logout() {
@@ -1135,15 +660,13 @@
                 // Unsubscribe from real-time listeners
                 if (unsubscribePosts) unsubscribePosts();
                 if (unsubscribeUsers) unsubscribeUsers();
-                if (unsubscribeMessages) unsubscribeMessages();
-                if (unsubscribeNotifications) unsubscribeNotifications();
                 
                 // Sign out from Firebase
                 await auth.signOut();
                 
                 currentUser = null;
                 document.getElementById('forumPage').style.display = 'none';
-                document.getElementById('loginPage').style.display = 'flex';
+                document.getElementById('loginPage').style.display = 'block';
                 document.getElementById('loginForm').reset();
                 document.getElementById('errorMessage').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'none';
@@ -1166,32 +689,21 @@
                 document.getElementById('postsContainer').innerHTML = '<p style="text-align: center; color: #e74c3c;">Error loading posts. Please refresh the page.</p>';
             });
 
-            // Listen for users status
+            // Listen for online users
             const usersQuery = db.collection('users');
             unsubscribeUsers = usersQuery.onSnapshot((snapshot) => {
                 const onlineUsers = [];
-                const allUsers = [];
-                
                 snapshot.forEach((doc) => {
                     const userData = doc.data();
-                    allUsers.push(userData);
                     if (userData.isOnline) {
                         onlineUsers.push(userData.username);
                     }
                 });
-                
                 renderOnlineUsers(onlineUsers);
-                renderActiveUsers(allUsers);
             }, (error) => {
                 console.error('Error loading users:', error);
                 document.getElementById('onlineUsers').innerHTML = '<p style="color: #e74c3c;">Error loading users</p>';
             });
-
-            // Load conversations for current user
-            loadConversations();
-            
-            // Load notifications
-            loadNotifications();
         }
 
         async function createPost() {
@@ -1240,20 +752,19 @@
                 matches.forEach(match => {
                     const username = match.substring(1);
                     if (users[username] && username !== currentUser.username) {
-                        addNotification(`${currentUser.username} mentioned you in a post`, 'mention', username);
+                        addNotification(`${currentUser.username} mentioned you in a post`, 'mention');
                     }
                 });
             }
         }
 
-        async function addNotification(message, type, targetUser) {
+        async function addNotification(message, type) {
             try {
                 await db.collection('notifications').add({
                     message: message,
                     type: type,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    targetUser: targetUser,
-                    read: false
+                    targetUser: currentUser.username
                 });
             } catch (error) {
                 console.error('Error adding notification:', error);
@@ -1271,26 +782,16 @@
             container.innerHTML = posts.map(post => `
                 <div class="post">
                     <div class="post-header">
-                        <div class="post-header-left">
-                            <div class="post-avatar">${post.author[0].toUpperCase()}</div>
-                            <div class="post-meta">
-                                <div class="post-author" onclick="viewProfile('${post.author}')">${post.author}</div>
-                                <div class="post-time">${formatTime(post.timestamp)}</div>
-                            </div>
+                        <div class="post-avatar">${post.author[0].toUpperCase()}</div>
+                        <div class="post-meta">
+                            <div class="post-author">${post.author}</div>
+                            <div class="post-time">${formatTime(post.timestamp)}</div>
                         </div>
-                        ${currentUser && currentUser.username === post.author ? 
-                            `<button class="action-btn delete-btn" onclick="deletePost('${post.id}')">
-                                <i class="fas fa-trash"></i>
-                            </button>` : ''}
                     </div>
                     <div class="post-content">${post.content}</div>
                     <div class="post-actions">
-                        <button class="action-btn reply-btn" onclick="showReplyForm('${post.id}')">
-                            <i class="fas fa-reply"></i> Reply
-                        </button>
-                        <button class="action-btn mention-btn" onclick="mentionUser('${post.author}')">
-                            <i class="fas fa-at"></i> @ ${post.author}
-                        </button>
+                        <button class="action-btn reply-btn" onclick="showReplyForm('${post.id}')">Reply</button>
+                        <button class="action-btn mention-btn" onclick="mentionUser('${post.author}')">@ ${post.author}</button>
                     </div>
                     <div id="replyForm${post.id}" class="reply-form">
                         <textarea class="reply-textarea" placeholder="Write your reply..." id="replyText${post.id}"></textarea>
@@ -1320,204 +821,11 @@
             }
             
             container.innerHTML = onlineUsers.map(username => `
-                <li class="online-user" onclick="viewProfile('${username}')">
+                <li class="online-user">
                     <div class="online-indicator"></div>
                     <span>${username}</span>
                 </li>
             `).join('');
-        }
-
-        function renderActiveUsers(allUsers) {
-            const activeContainer = document.getElementById('activeUsers');
-            const recentContainer = document.getElementById('recentUsers');
-            
-            // Sort users by last seen (most recent first)
-            allUsers.sort((a, b) => {
-                if (a.lastSeen && b.lastSeen) {
-                    return b.lastSeen.toDate() - a.lastSeen.toDate();
-                }
-                return 0;
-            });
-            
-            // Separate online and offline users
-            const onlineUsers = allUsers.filter(u => u.isOnline && u.username !== currentUser.username);
-            const offlineUsers = allUsers.filter(u => !u.isOnline && u.username !== currentUser.username);
-            
-            // Display online users
-            if (onlineUsers.length > 0) {
-                activeContainer.innerHTML = onlineUsers.map(user => `
-                    <li class="online-user" onclick="startNewConversation('${user.username}')">
-                        <div class="online-indicator"></div>
-                        <span>${user.username}</span>
-                    </li>
-                `).join('');
-            } else {
-                activeContainer.innerHTML = '<p style="color: #666; font-size: 0.9rem;">No users online</p>';
-            }
-            
-            // Display recently active offline users (max 5)
-            const recentUsers = offlineUsers.slice(0, 5);
-            if (recentUsers.length > 0) {
-                recentContainer.innerHTML = recentUsers.map(user => `
-                    <li class="online-user" onclick="viewProfile('${user.username}')">
-                        <div class="offline-indicator"></div>
-                        <span>${user.username}</span>
-                    </li>
-                `).join('');
-            } else {
-                recentContainer.innerHTML = '<p style="color: #666; font-size: 0.9rem;">No recent activity</p>';
-            }
-        }
-
-        function loadConversations() {
-            const container = document.getElementById('conversationsList');
-            container.innerHTML = '';
-            
-            // Get all users except current user
-            const otherUsers = Object.keys(users).filter(u => u !== currentUser.username);
-            
-            if (otherUsers.length === 0) {
-                document.getElementById('noConversations').style.display = 'flex';
-                return;
-            }
-            
-            otherUsers.forEach(username => {
-                const user = users[username];
-                const conversationEl = document.createElement('div');
-                conversationEl.className = 'message-thread';
-                conversationEl.innerHTML = `
-                    <div class="message-avatar">${username[0].toUpperCase()}</div>
-                    <div class="message-info">
-                        <div class="message-sender">${username}</div>
-                        <div class="message-preview">Click to start conversation</div>
-                    </div>
-                `;
-                conversationEl.addEventListener('click', () => openChat(username));
-                container.appendChild(conversationEl);
-            });
-        }
-
-        function openChat(username) {
-            currentChatPartner = username;
-            
-            // Hide conversations list and show chat
-            document.getElementById('conversationsList').style.display = 'none';
-            document.getElementById('noConversations').style.display = 'none';
-            document.getElementById('chatContainer').style.display = 'flex';
-            
-            // Set chat partner info
-            document.getElementById('chatPartnerAvatar').textContent = username[0].toUpperCase();
-            document.getElementById('chatPartnerName').textContent = username;
-            document.getElementById('chatPartnerStatus').textContent = users[username].status;
-            
-            // Load messages
-            loadMessages(username);
-        }
-
-        function showConversations() {
-            document.getElementById('conversationsList').style.display = 'flex';
-            document.getElementById('noConversations').style.display = 'flex';
-            document.getElementById('chatContainer').style.display = 'none';
-            currentChatPartner = null;
-            
-            // Unsubscribe from previous message listener
-            if (unsubscribeMessages) unsubscribeMessages();
-        }
-
-        function loadMessages(partner) {
-            const container = document.getElementById('chatMessages');
-            container.innerHTML = '<div class="loading">Loading messages...</div>';
-            
-            // Simulate messages (in a real app, you'd fetch from database)
-            setTimeout(() => {
-                container.innerHTML = `
-                    <div class="message received">
-                        <div>Hey ${currentUser.username}, how are you doing?</div>
-                        <div class="message-time-stamp">Today, 10:30 AM</div>
-                    </div>
-                    <div class="message sent">
-                        <div>Hi ${partner}, I'm good! Just working on this new forum.</div>
-                        <div class="message-time-stamp">Today, 10:32 AM</div>
-                    </div>
-                    <div class="message received">
-                        <div>That's awesome! I really like the new messaging feature.</div>
-                        <div class="message-time-stamp">Today, 10:35 AM</div>
-                    </div>
-                `;
-                
-                // Scroll to bottom
-                container.scrollTop = container.scrollHeight;
-            }, 500);
-            
-            // Setup message sending
-            document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
-            document.getElementById('messageInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendMessage();
-            });
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            
-            const container = document.getElementById('chatMessages');
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            // Add message to chat
-            container.innerHTML += `
-                <div class="message sent">
-                    <div>${message}</div>
-                    <div class="message-time-stamp">${timeStr}</div>
-                </div>
-            `;
-            
-            // Clear input
-            input.value = '';
-            
-            // Scroll to bottom
-            container.scrollTop = container.scrollHeight;
-            
-            // Simulate reply after a short delay
-            setTimeout(() => {
-                container.innerHTML += `
-                    <div class="message received">
-                        <div>Thanks for your message! This is an auto-reply as this is a demo.</div>
-                        <div class="message-time-stamp">${timeStr}</div>
-                    </div>
-                `;
-                container.scrollTop = container.scrollHeight;
-            }, 1000);
-        }
-
-        function startNewConversation(username) {
-            // Switch to messages tab
-            switchTab('messages');
-            
-            // Open chat with this user
-            setTimeout(() => openChat(username), 100);
-        }
-
-        function loadNotifications() {
-            const container = document.getElementById('notificationsContainer');
-            
-            // Simulate notifications (in a real app, you'd fetch from database)
-            setTimeout(() => {
-                container.innerHTML = `
-                    <div class="notification mention">
-                        <strong>Mohy</strong> mentioned you in a post
-                        <div class="post-time">2 hours ago</div>
-                    </div>
-                    <div class="notification reply">
-                        <strong>Daniel</strong> replied to your post
-                        <div class="post-time">5 hours ago</div>
-                    </div>
-                `;
-                
-                document.getElementById('noNotifications').style.display = 'none';
-            }, 1000);
         }
 
         window.showReplyForm = function(postId) {
@@ -1555,7 +863,7 @@
                 hideReplyForm(postId);
                 
                 // Add notification for the original post author
-                await addNotification(`${currentUser.username} replied to your post`, 'reply', postRef.author);
+                await addNotification(`${currentUser.username} replied to your post`, 'reply');
             } catch (error) {
                 console.error('Error submitting reply:', error);
                 alert('Failed to submit reply. Please try again.');
@@ -1566,119 +874,6 @@
             const postContent = document.getElementById('postContent');
             postContent.value += `@${username} `;
             postContent.focus();
-        }
-
-        window.deletePost = async function(postId) {
-            if (!confirm('Are you sure you want to delete this post?')) return;
-            
-            try {
-                await db.collection('posts').doc(postId).delete();
-                // Add notification
-                addNotification('You deleted your post', 'info', currentUser.username);
-            } catch (error) {
-                console.error('Error deleting post:', error);
-                alert('Failed to delete post. Please try again.');
-            }
-        }
-
-        window.viewProfile = function(username) {
-            // Set profile info for the viewed user
-            const user = users[username];
-            document.getElementById('profileAvatar').textContent = username[0].toUpperCase();
-            document.getElementById('profileUsername').textContent = username;
-            document.getElementById('profileStatus').textContent = user.status;
-            document.getElementById('profileBio').textContent = `This is ${username}'s profile. ${user.role === 'founder' ? 'GC Founder' : 'GC Member'}.`;
-            
-            // Hide bio editor for other users
-            document.getElementById('bioEditor').style.display = 'none';
-            document.getElementById('editBioBtn').style.display = 'none';
-            document.getElementById('saveBioBtn').style.display = 'none';
-            
-            // Show message button only if it's not the current user
-            const messageBtn = document.getElementById('profileMessageBtn');
-            messageBtn.style.display = username !== currentUser.username ? 'block' : 'none';
-            messageBtn.onclick = () => startNewConversation(username);
-            
-            // Switch to profile tab
-            switchTab('profile');
-        }
-
-        function setupNavigation() {
-            // Tab switching
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Remove active class from all items
-                    navItems.forEach(i => i.classList.remove('active'));
-                    
-                    // Add active class to clicked item
-                    this.classList.add('active');
-                    
-                    // Switch tab
-                    const tabName = this.getAttribute('data-tab');
-                    switchTab(tabName);
-                });
-            });
-            
-            // Bio editing
-            const editBioBtn = document.getElementById('editBioBtn');
-            const saveBioBtn = document.getElementById('saveBioBtn');
-            const bioEditor = document.getElementById('bioEditor');
-            const profileBio = document.getElementById('profileBio');
-            
-            editBioBtn.addEventListener('click', function() {
-                bioEditor.value = profileBio.textContent;
-                bioEditor.style.display = 'block';
-                profileBio.style.display = 'none';
-                editBioBtn.style.display = 'none';
-                saveBioBtn.style.display = 'block';
-            });
-            
-            saveBioBtn.addEventListener('click', function() {
-                profileBio.textContent = bioEditor.value;
-                bioEditor.style.display = 'none';
-                profileBio.style.display = 'block';
-                editBioBtn.style.display = 'block';
-                saveBioBtn.style.display = 'none';
-                
-                // Save bio to storage (simulated)
-                localStorage.setItem(`${currentUser.username}_bio`, bioEditor.value);
-            });
-            
-            // Load saved bio if exists
-            const savedBio = localStorage.getItem(`${currentUser.username}_bio`);
-            if (savedBio) {
-                profileBio.textContent = savedBio;
-            }
-        }
-
-        function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.style.display = 'none';
-            });
-            
-            // Show selected tab
-            document.getElementById(`${tabName}Tab`).style.display = 'block';
-            
-            // Update profile info if it's the profile tab
-            if (tabName === 'profile' && currentUser) {
-                document.getElementById('profileAvatar').textContent = currentUser.username[0].toUpperCase();
-                document.getElementById('profileUsername').textContent = currentUser.username;
-                document.getElementById('profileStatus').textContent = currentUser.status;
-                
-                // Show bio editor only for current user
-                document.getElementById('editBioBtn').style.display = 'block';
-                document.getElementById('saveBioBtn').style.display = 'none';
-                document.getElementById('bioEditor').style.display = 'none';
-                document.getElementById('profileMessageBtn').style.display = 'none';
-                
-                // Load saved bio if exists
-                const savedBio = localStorage.getItem(`${currentUser.username}_bio`);
-                if (savedBio) {
-                    document.getElementById('profileBio').textContent = savedBio;
-                }
-            }
         }
 
         function formatTime(timestamp) {
@@ -1700,9 +895,6 @@
         // Make functions available globally
         window.logout = logout;
         window.createPost = createPost;
-        window.switchTab = switchTab;
-        window.viewProfile = viewProfile;
-        window.startNewConversation = startNewConversation;
     </script>
 </body>
 </html>
