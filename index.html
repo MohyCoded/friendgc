@@ -529,27 +529,26 @@
     </div>
 
     <!-- Firebase SDKs -->
-    <script type="module">
-        // Import Firebase functions
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, addDoc, onSnapshot, orderBy, query, serverTimestamp, doc, setDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-        import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
+    <script>
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCcAWcyND-2emN-BzEOykH2ELVBRC6T_zo",
             authDomain: "project-8186776965254731895.firebaseapp.com",
             projectId: "project-8186776965254731895",
-            storageBucket: "project-8186776965254731895.firebasestorage.app",
+            storageBucket: "project-8186776965254731895.appspot.com",
             messagingSenderId: "82061285209",
             appId: "1:82061285209:web:bd7a2f6e4639567d6a1e48",
             measurementId: "G-B7MBE4JJRW"
         };
 
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
 
         // User database
         const users = {
@@ -568,7 +567,7 @@
         let unsubscribeUsers = null;
 
         // Initialize Firebase Auth
-        onAuthStateChanged(auth, (user) => {
+        auth.onAuthStateChanged((user) => {
             if (user && currentUser) {
                 console.log('Firebase user authenticated:', user.uid);
             }
@@ -591,7 +590,7 @@
             try {
                 if (users[username] && users[username].password === password) {
                     // Sign in anonymously to Firebase
-                    await signInAnonymously(auth);
+                    await auth.signInAnonymously();
                     
                     currentUser = {
                         username: username,
@@ -599,7 +598,7 @@
                         role: users[username].role
                     };
                     
-                    // Update user's online status - using setDoc with merge
+                    // Update user's online status
                     await updateUserOnlineStatus(username, true);
                     
                     showForum();
@@ -626,15 +625,14 @@
             }
         });
 
-        // Fixed function to update user status
+        // Function to update user status
         async function updateUserOnlineStatus(username, isOnline) {
             try {
-                const userRef = doc(db, 'users', username);
-                // Use setDoc with merge: true to create or update the document
-                await setDoc(userRef, {
+                const userRef = db.collection('users').doc(username);
+                await userRef.set({
                     username: username,
                     isOnline: isOnline,
-                    lastSeen: serverTimestamp()
+                    lastSeen: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
                 
                 console.log(`User ${username} status updated to ${isOnline ? 'online' : 'offline'}`);
@@ -663,6 +661,9 @@
                 if (unsubscribePosts) unsubscribePosts();
                 if (unsubscribeUsers) unsubscribeUsers();
                 
+                // Sign out from Firebase
+                await auth.signOut();
+                
                 currentUser = null;
                 document.getElementById('forumPage').style.display = 'none';
                 document.getElementById('loginPage').style.display = 'block';
@@ -676,8 +677,8 @@
 
         function loadRealtimeData() {
             // Listen for real-time posts
-            const postsQuery = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
-            unsubscribePosts = onSnapshot(postsQuery, (snapshot) => {
+            const postsQuery = db.collection('posts').orderBy('timestamp', 'desc');
+            unsubscribePosts = postsQuery.onSnapshot((snapshot) => {
                 const posts = [];
                 snapshot.forEach((doc) => {
                     posts.push({ id: doc.id, ...doc.data() });
@@ -689,8 +690,8 @@
             });
 
             // Listen for online users
-            const usersQuery = query(collection(db, 'users'));
-            unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
+            const usersQuery = db.collection('users');
+            unsubscribeUsers = usersQuery.onSnapshot((snapshot) => {
                 const onlineUsers = [];
                 snapshot.forEach((doc) => {
                     const userData = doc.data();
@@ -723,10 +724,10 @@
             postBtn.textContent = 'Posting...';
             
             try {
-                await addDoc(collection(db, 'posts'), {
+                await db.collection('posts').add({
                     author: currentUser.username,
                     content: content,
-                    timestamp: serverTimestamp(),
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     replies: []
                 });
                 
@@ -759,10 +760,10 @@
 
         async function addNotification(message, type) {
             try {
-                await addDoc(collection(db, 'notifications'), {
+                await db.collection('notifications').add({
                     message: message,
                     type: type,
-                    timestamp: serverTimestamp(),
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     targetUser: currentUser.username
                 });
             } catch (error) {
@@ -850,14 +851,14 @@
             }
             
             try {
-                const postRef = doc(db, 'posts', postId);
-                await setDoc(postRef, {
-                    replies: arrayUnion({
+                const postRef = db.collection('posts').doc(postId);
+                await postRef.update({
+                    replies: firebase.firestore.FieldValue.arrayUnion({
                         author: currentUser.username,
                         content: replyText,
                         timestamp: new Date()
                     })
-                }, { merge: true });
+                });
                 
                 hideReplyForm(postId);
                 
