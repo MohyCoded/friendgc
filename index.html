@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GC Forum</title>
+    <title>GC Social</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
+            display: flex;
         }
 
         /* Login Page Styles */
@@ -25,6 +27,7 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            width: 100%;
         }
 
         .login-box {
@@ -119,9 +122,50 @@
         /* Main Forum Styles */
         .forum-container {
             display: none;
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            gap: 20px;
+        }
+
+        .app-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 350px;
+            gap: 20px;
+            height: calc(100vh - 40px);
+        }
+
+        .sidebar-left {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-right {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            overflow-y: auto;
         }
 
         .forum-header {
@@ -131,6 +175,7 @@
             border-radius: 15px;
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
         }
 
         .user-welcome {
@@ -138,6 +183,7 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         .user-info {
@@ -184,20 +230,6 @@
         .logout-btn:hover {
             background: #c0392b;
             transform: translateY(-1px);
-        }
-
-        .forum-content {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-        }
-
-        .main-forum {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .post-composer {
@@ -252,6 +284,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            flex: 1;
         }
 
         .post {
@@ -270,8 +303,15 @@
         .post-header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 10px;
             margin-bottom: 15px;
+        }
+
+        .post-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .post-avatar {
@@ -293,6 +333,12 @@
         .post-author {
             font-weight: 600;
             color: #333;
+            cursor: pointer;
+        }
+
+        .post-author:hover {
+            color: #764ba2;
+            text-decoration: underline;
         }
 
         .post-time {
@@ -320,6 +366,9 @@
             cursor: pointer;
             font-size: 0.9rem;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .action-btn:hover {
@@ -335,16 +384,11 @@
             color: #28a745;
         }
 
-        /* Sidebar Styles */
-        .sidebar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            height: fit-content;
+        .delete-btn {
+            color: #e74c3c;
         }
 
+        /* Sidebar Styles */
         .sidebar-section {
             margin-bottom: 25px;
         }
@@ -354,6 +398,9 @@
             color: #764ba2;
             margin-bottom: 15px;
             font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .notification {
@@ -363,6 +410,12 @@
             padding: 10px;
             margin-bottom: 10px;
             font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .notification:hover {
+            transform: translateX(3px);
         }
 
         .notification.mention {
@@ -386,12 +439,24 @@
             gap: 10px;
             padding: 8px 0;
             border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+
+        .online-user:hover {
+            background-color: #f8f9fa;
         }
 
         .online-indicator {
             width: 8px;
             height: 8px;
             background: #28a745;
+            border-radius: 50%;
+        }
+
+        .offline-indicator {
+            width: 8px;
+            height: 8px;
+            background: #e74c3c;
             border-radius: 50%;
         }
 
@@ -440,20 +505,265 @@
             color: #666;
         }
 
+        /* Navigation Styles */
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: #f0f2f5;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        /* Profile Styles */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+
+        .profile-details h2 {
+            color: #764ba2;
+            margin-bottom: 5px;
+        }
+
+        .profile-status {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .profile-bio {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .message-btn {
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Messages Styles */
+        .messages-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message-thread {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .message-thread:hover {
+            background-color: #f0f2f5;
+        }
+
+        .message-thread.active {
+            background-color: #e6e9ff;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .message-info {
+            flex: 1;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .message-preview {
+            font-size: 0.9rem;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.received {
+            align-self: flex-start;
+            background: #f0f2f5;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-time-stamp {
+            font-size: 0.7rem;
+            margin-top: 5px;
+            text-align: right;
+            opacity: 0.8;
+        }
+
+        .message-input-container {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            gap: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .message-send-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .no-chat-selected {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        .no-chat-selected i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #764ba2;
+            opacity: 0.5;
+        }
+
         /* Responsive Design */
+        @media (max-width: 1100px) {
+            .app-layout {
+                grid-template-columns: 250px 1fr;
+            }
+            .sidebar-right {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
-            .forum-content {
+            .app-layout {
                 grid-template-columns: 1fr;
             }
-            
-            .user-welcome {
-                flex-direction: column;
-                gap: 15px;
+            .sidebar-left {
+                display: none;
             }
-            
-            .login-box {
-                margin: 10px;
-                padding: 30px 20px;
+            .forum-header {
+                display: block;
             }
         }
     </style>
@@ -462,8 +772,8 @@
     <!-- Login Page -->
     <div id="loginPage" class="login-container">
         <div class="login-box">
-            <h1 class="login-title">GC Forum</h1>
-            <p class="login-subtitle">Welcome to the Group Chat</p>
+            <h1 class="login-title">GC Social</h1>
+            <p class="login-subtitle">Connect with your friends</p>
             
             <form id="loginForm">
                 <div class="form-group">
@@ -498,30 +808,161 @@
             </div>
         </div>
 
-        <div class="forum-content">
-            <div class="main-forum">
-                <div class="post-composer">
-                    <textarea id="postContent" class="composer-textarea" placeholder="What's on your mind?"></textarea>
-                    <button onclick="createPost()" class="post-btn" id="postBtn">Post Message</button>
+        <div class="app-layout">
+            <!-- Left Sidebar Navigation -->
+            <div class="sidebar-left">
+                <div class="nav-item active" data-tab="forum">
+                    <i class="fas fa-home"></i>
+                    <span>Forum Feed</span>
+                </div>
+                <div class="nav-item" data-tab="messages">
+                    <i class="fas fa-comments"></i>
+                    <span>Messages</span>
+                </div>
+                <div class="nav-item" data-tab="profile">
+                    <i class="fas fa-user"></i>
+                    <span>My Profile</span>
                 </div>
                 
-                <div id="postsContainer" class="posts-container">
-                    <div class="loading">Loading posts...</div>
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-users"></i>
+                        <span>Online Friends</span>
+                    </h3>
+                    <ul id="onlineUsers" class="online-users">
+                        <div class="loading">Loading users...</div>
+                    </ul>
                 </div>
             </div>
 
-            <div class="sidebar">
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Forum Tab -->
+                <div id="forumTab" class="tab-content">
+                    <div class="post-composer">
+                        <textarea id="postContent" class="composer-textarea" placeholder="What's on your mind?"></textarea>
+                        <button onclick="createPost()" class="post-btn" id="postBtn">Post Message</button>
+                    </div>
+                    
+                    <div id="postsContainer" class="posts-container">
+                        <div class="loading">Loading posts...</div>
+                    </div>
+                </div>
+
+                <!-- Messages Tab -->
+                <div id="messagesTab" class="tab-content" style="display: none;">
+                    <div class="messages-container">
+                        <div class="message-thread active" data-user="Mohy">
+                            <div class="message-avatar">M</div>
+                            <div class="message-info">
+                                <div class="message-sender">Mohy</div>
+                                <div class="message-preview">Hey, how's it going?</div>
+                            </div>
+                            <div class="message-time">2h</div>
+                        </div>
+                        <div class="message-thread" data-user="Samy">
+                            <div class="message-avatar">S</div>
+                            <div class="message-info">
+                                <div class="message-sender">Samy</div>
+                                <div class="message-preview">Check out this new feature!</div>
+                            </div>
+                            <div class="message-time">5h</div>
+                        </div>
+                        <div class="message-thread" data-user="Prince">
+                            <div class="message-avatar">P</div>
+                            <div class="message-info">
+                                <div class="message-sender">Prince</div>
+                                <div class="message-preview">Meeting tomorrow?</div>
+                            </div>
+                            <div class="message-time">1d</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="profileTab" class="tab-content" style="display: none;">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar"></div>
+                        <div class="profile-details">
+                            <h2 id="profileUsername"></h2>
+                            <p class="profile-status" id="profileStatus"></p>
+                            <button class="message-btn" onclick="switchTab('messages')">
+                                <i class="fas fa-envelope"></i>
+                                <span>My Messages</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-bio">
+                        <h3>About Me</h3>
+                        <p id="profileBio">I'm a member of the GC community. Love connecting with friends and sharing ideas!</p>
+                        <textarea id="bioEditor" class="composer-textarea" placeholder="Edit your bio..." style="display: none; min-height: 80px;"></textarea>
+                        <button id="editBioBtn" class="post-btn" style="margin-top: 10px;">
+                            <i class="fas fa-edit"></i>
+                            Edit Bio
+                        </button>
+                        <button id="saveBioBtn" class="post-btn" style="display: none; margin-top: 10px;">
+                            <i class="fas fa-save"></i>
+                            Save Bio
+                        </button>
+                    </div>
+                    
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-history"></i>
+                        <span>My Recent Posts</span>
+                    </h3>
+                    <div id="userPosts" class="posts-container">
+                        <p>No posts yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="sidebar-right">
                 <div class="sidebar-section">
-                    <h3 class="sidebar-title">Notifications</h3>
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                    </h3>
                     <div id="notificationsContainer">
-                        <p style="color: #666; font-size: 0.9rem;">No new notifications</p>
+                        <div class="notification mention">
+                            <strong>Mohy</strong> mentioned you in a post
+                            <div class="post-time">2 hours ago</div>
+                        </div>
+                        <div class="notification reply">
+                            <strong>Samy</strong> replied to your post
+                            <div class="post-time">5 hours ago</div>
+                        </div>
+                        <p id="noNotifications" style="color: #666; font-size: 0.9rem; display: none;">No new notifications</p>
                     </div>
                 </div>
 
                 <div class="sidebar-section">
-                    <h3 class="sidebar-title">Online Users</h3>
-                    <ul id="onlineUsers" class="online-users">
-                        <div class="loading">Loading users...</div>
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Active Now</span>
+                    </h3>
+                    <ul id="activeUsers" class="online-users">
+                        <li class="online-user">
+                            <div class="online-indicator"></div>
+                            <span>Mohy</span>
+                        </li>
+                        <li class="online-user">
+                            <div class="online-indicator"></div>
+                            <span>Samy</span>
+                        </li>
+                        <li class="online-user">
+                            <div class="offline-indicator"></div>
+                            <span>Darell</span>
+                        </li>
+                        <li class="online-user">
+                            <div class="online-indicator"></div>
+                            <span>Prince</span>
+                        </li>
+                        <li class="online-user">
+                            <div class="offline-indicator"></div>
+                            <span>Tyrell</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -550,7 +991,7 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // User database
+        // User database with new users
         const users = {
             'Darell': { password: 'gcuser', status: 'Original GC Member', role: 'founder' },
             'Samy': { password: 'gcuser', status: 'Original GC Member', role: 'founder' },
@@ -558,7 +999,9 @@
             'Marlon': { password: 'gcuser', status: 'GC Founder', role: 'founder' },
             'Mohy': { password: 'gcuser', status: 'GC Founder', role: 'founder' },
             'Daniel': { password: 'gcuser', status: 'New GC Member', role: 'member' },
-            'Tristian': { password: 'gcuser', status: 'Old GC Member', role: 'member' }
+            'Tristian': { password: 'gcuser', status: 'Old GC Member', role: 'member' },
+            'Prince': { password: 'gcuser', status: 'New GC Member', role: 'member' },
+            'Tyrell': { password: 'gcuser', status: 'New GC Member', role: 'member' }
         };
 
         // Global variables
@@ -570,6 +1013,9 @@
         auth.onAuthStateChanged((user) => {
             if (user && currentUser) {
                 console.log('Firebase user authenticated:', user.uid);
+                // Restore session on refresh
+                showForum();
+                loadRealtimeData();
             }
         });
 
@@ -649,6 +1095,14 @@
             document.getElementById('userAvatar').textContent = currentUser.username[0].toUpperCase();
             document.getElementById('welcomeMessage').textContent = `Welcome, ${currentUser.username}!`;
             document.getElementById('userStatus').textContent = currentUser.status;
+            
+            // Set profile info
+            document.getElementById('profileAvatar').textContent = currentUser.username[0].toUpperCase();
+            document.getElementById('profileUsername').textContent = currentUser.username;
+            document.getElementById('profileStatus').textContent = currentUser.status;
+            
+            // Setup navigation
+            setupNavigation();
         }
 
         async function logout() {
@@ -666,7 +1120,7 @@
                 
                 currentUser = null;
                 document.getElementById('forumPage').style.display = 'none';
-                document.getElementById('loginPage').style.display = 'block';
+                document.getElementById('loginPage').style.display = 'flex';
                 document.getElementById('loginForm').reset();
                 document.getElementById('errorMessage').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'none';
@@ -782,16 +1236,26 @@
             container.innerHTML = posts.map(post => `
                 <div class="post">
                     <div class="post-header">
-                        <div class="post-avatar">${post.author[0].toUpperCase()}</div>
-                        <div class="post-meta">
-                            <div class="post-author">${post.author}</div>
-                            <div class="post-time">${formatTime(post.timestamp)}</div>
+                        <div class="post-header-left">
+                            <div class="post-avatar">${post.author[0].toUpperCase()}</div>
+                            <div class="post-meta">
+                                <div class="post-author" onclick="viewProfile('${post.author}')">${post.author}</div>
+                                <div class="post-time">${formatTime(post.timestamp)}</div>
+                            </div>
                         </div>
+                        ${currentUser && currentUser.username === post.author ? 
+                            `<button class="action-btn delete-btn" onclick="deletePost('${post.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>` : ''}
                     </div>
                     <div class="post-content">${post.content}</div>
                     <div class="post-actions">
-                        <button class="action-btn reply-btn" onclick="showReplyForm('${post.id}')">Reply</button>
-                        <button class="action-btn mention-btn" onclick="mentionUser('${post.author}')">@ ${post.author}</button>
+                        <button class="action-btn reply-btn" onclick="showReplyForm('${post.id}')">
+                            <i class="fas fa-reply"></i> Reply
+                        </button>
+                        <button class="action-btn mention-btn" onclick="mentionUser('${post.author}')">
+                            <i class="fas fa-at"></i> @ ${post.author}
+                        </button>
                     </div>
                     <div id="replyForm${post.id}" class="reply-form">
                         <textarea class="reply-textarea" placeholder="Write your reply..." id="replyText${post.id}"></textarea>
@@ -821,7 +1285,7 @@
             }
             
             container.innerHTML = onlineUsers.map(username => `
-                <li class="online-user">
+                <li class="online-user" onclick="viewProfile('${username}')">
                     <div class="online-indicator"></div>
                     <span>${username}</span>
                 </li>
@@ -876,6 +1340,124 @@
             postContent.focus();
         }
 
+        window.deletePost = async function(postId) {
+            if (!confirm('Are you sure you want to delete this post?')) return;
+            
+            try {
+                await db.collection('posts').doc(postId).delete();
+                // Add notification
+                addNotification('You deleted your post', 'info');
+            } catch (error) {
+                console.error('Error deleting post:', error);
+                alert('Failed to delete post. Please try again.');
+            }
+        }
+
+        window.viewProfile = function(username) {
+            // Set profile info for the viewed user
+            const user = users[username];
+            document.getElementById('profileAvatar').textContent = username[0].toUpperCase();
+            document.getElementById('profileUsername').textContent = username;
+            document.getElementById('profileStatus').textContent = user.status;
+            document.getElementById('profileBio').textContent = `This is ${username}'s profile. ${user.role === 'founder' ? 'GC Founder' : 'GC Member'}.`;
+            
+            // Hide bio editor for other users
+            document.getElementById('bioEditor').style.display = 'none';
+            document.getElementById('editBioBtn').style.display = 'none';
+            document.getElementById('saveBioBtn').style.display = 'none';
+            
+            // Show message button only if it's not the current user
+            document.querySelector('.message-btn').style.display = 
+                username !== currentUser.username ? 'block' : 'none';
+            
+            // Switch to profile tab
+            switchTab('profile');
+        }
+
+        function setupNavigation() {
+            // Tab switching
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    navItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Switch tab
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+            
+            // Bio editing
+            const editBioBtn = document.getElementById('editBioBtn');
+            const saveBioBtn = document.getElementById('saveBioBtn');
+            const bioEditor = document.getElementById('bioEditor');
+            const profileBio = document.getElementById('profileBio');
+            
+            editBioBtn.addEventListener('click', function() {
+                bioEditor.value = profileBio.textContent;
+                bioEditor.style.display = 'block';
+                profileBio.style.display = 'none';
+                editBioBtn.style.display = 'none';
+                saveBioBtn.style.display = 'block';
+            });
+            
+            saveBioBtn.addEventListener('click', function() {
+                profileBio.textContent = bioEditor.value;
+                bioEditor.style.display = 'none';
+                profileBio.style.display = 'block';
+                editBioBtn.style.display = 'block';
+                saveBioBtn.style.display = 'none';
+                
+                // Save bio to storage (simulated)
+                localStorage.setItem(`${currentUser.username}_bio`, bioEditor.value);
+            });
+            
+            // Load saved bio if exists
+            const savedBio = localStorage.getItem(`${currentUser.username}_bio`);
+            if (savedBio) {
+                profileBio.textContent = savedBio;
+            }
+            
+            // Message threads
+            const messageThreads = document.querySelectorAll('.message-thread');
+            messageThreads.forEach(thread => {
+                thread.addEventListener('click', function() {
+                    // Remove active class from all threads
+                    messageThreads.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked thread
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            // Show selected tab
+            document.getElementById(`${tabName}Tab`).style.display = 'block';
+            
+            // Update profile info if it's the profile tab
+            if (tabName === 'profile' && currentUser) {
+                document.getElementById('profileAvatar').textContent = currentUser.username[0].toUpperCase();
+                document.getElementById('profileUsername').textContent = currentUser.username;
+                document.getElementById('profileStatus').textContent = currentUser.status;
+                
+                // Show bio editor only for current user
+                document.getElementById('editBioBtn').style.display = 'block';
+                document.getElementById('saveBioBtn').style.display = 'none';
+                document.getElementById('bioEditor').style.display = 'none';
+                document.querySelector('.message-btn').style.display = 'none';
+            }
+        }
+
         function formatTime(timestamp) {
             if (!timestamp) return 'Just now';
             
@@ -895,6 +1477,8 @@
         // Make functions available globally
         window.logout = logout;
         window.createPost = createPost;
+        window.switchTab = switchTab;
+        window.viewProfile = viewProfile;
     </script>
 </body>
 </html>
