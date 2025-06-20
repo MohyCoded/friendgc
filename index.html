@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Northridge Middle School GC Memories</title>
+    <title>GC Forum</title>
     <style>
         * {
             margin: 0;
@@ -12,818 +12,886 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #fff;
-            overflow-x: hidden;
+            color: #333;
         }
 
-        .container {
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #764ba2;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(118, 75, 162, 0.3);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .success-message {
+            color: #27ae60;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        /* Main Forum Styles */
+        .forum-container {
+            display: none;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            animation: fadeInDown 1.5s ease-out;
-        }
-
-        .main-title {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: #ffd700;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-        }
-
-        .school-logo {
-            width: 200px;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
-            margin-bottom: 30px;
-        }
-
-        .school-logo:hover {
-            transform: scale(1.05) rotate(2deg);
-        }
-
-        .speech-section {
-            background: rgba(20, 30, 50, 0.9);
-            border: 2px solid #ffd700;
-            padding: 40px;
-            border-radius: 20px;
-            margin: 40px 0;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            animation: fadeInUp 1.5s ease-out 0.5s both;
+        .forum-header {
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-        }
-
-        .speech-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: #e0e6ed;
-            text-align: center;
-            font-style: italic;
-        }
-
-        .friends-section {
-            margin-top: 60px;
-            animation: fadeInUp 1.5s ease-out 1s both;
-        }
-
-        .friends-title {
-            font-size: 3rem;
-            color: #ffd700;
-            text-align: center;
-            margin-bottom: 50px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: pulse 2s infinite;
-        }
-
-        .friends-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .friend-card {
-            background: rgba(20, 30, 50, 0.9);
-            border: 2px solid #ffd700;
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            transition: all 0.4s ease;
-            max-width: 400px;
-            flex: 1;
-            min-width: 350px;
-            backdrop-filter: blur(10px);
-            animation: slideInUp 1s ease-out;
-        }
-
-        .friend-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.2);
-            border-color: #fff;
-        }
-
-        .friend-image {
-            width: 250px;
-            height: 300px;
-            object-fit: cover;
+            padding: 20px;
             border-radius: 15px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .friend-image:hover {
-            transform: scale(1.05);
-        }
-
-        .friend-name {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-
-        .friend-description {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #e0e6ed;
-            font-style: italic;
-        }
-
-        .audio-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(20, 30, 50, 0.95);
-            border: 2px solid #ffd700;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .audio-control:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
-        }
-
-        .audio-embed {
-            margin-bottom: 15px;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .audio-embed iframe {
-            border-radius: 15px;
-        }
-
-        .audio-buttons {
+        .user-welcome {
             display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 10px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
-        .audio-btn {
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            border: none;
-            color: #1a1a2e;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .audio-btn:hover {
-            background: linear-gradient(135deg, #ffed4e, #ffd700);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .audio-btn:active {
-            transform: translateY(0);
-        }
-
-        .audio-btn.playing {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            animation: pulse-red 1.5s infinite;
-        }
-
-        .vocaroo-link {
-            color: #ffd700;
-            text-decoration: none;
-            font-size: 0.8rem;
-            text-align: center;
-            display: block;
-            transition: color 0.3s ease;
-        }
-
-        .vocaroo-link:hover {
-            color: #fff;
-        }
-
-        .audio-status {
-            text-align: center;
-            color: #e0e6ed;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        @keyframes pulse-red {
-            0%, 100% {
-                box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            }
-            50% {
-                box-shadow: 0 6px 25px rgba(255, 107, 107, 0.6);
-            }
-        }
-
-        /* Cursor Confetti Effects */
-        .confetti-particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            width: 8px;
-            height: 8px;
+        .user-avatar {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            animation: confetti-fall 1.5s ease-out forwards;
-        }
-
-        .confetti-star {
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            border-radius: 0;
-            width: 12px;
-            height: 12px;
-        }
-
-        .confetti-triangle {
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            border-radius: 0;
-            width: 10px;
-            height: 10px;
-        }
-
-        .confetti-square {
-            border-radius: 2px;
-            width: 8px;
-            height: 8px;
-        }
-
-        @keyframes confetti-fall {
-            0% {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(100px) rotate(360deg) scale(0.3);
-            }
-        }
-
-        /* Congratulations Banner */
-        .congrats-banner {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10000;
-            animation: banner-show 4s ease-out forwards;
-        }
-
-        .congrats-text {
-            font-size: 4rem;
+            color: white;
             font-weight: bold;
-            color: #ffd700;
-            text-align: center;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6);
-            animation: congrats-glow 2s ease-in-out infinite alternate, congrats-bounce 1s ease-out;
-            transform-origin: center;
+            font-size: 1.2rem;
         }
 
-        .congrats-subtext {
+        .user-details h2 {
+            color: #764ba2;
             font-size: 1.5rem;
-            color: #e0e6ed;
-            margin-top: 20px;
-            text-align: center;
-            animation: fadeInUp 2s ease-out 1s both;
+            margin-bottom: 5px;
         }
 
-        @keyframes banner-show {
-            0% {
-                opacity: 1;
-                visibility: visible;
-            }
-            70% {
-                opacity: 1;
-                visibility: visible;
-            }
-            100% {
-                opacity: 0;
-                visibility: hidden;
-            }
+        .user-status {
+            color: #666;
+            font-size: 0.9rem;
         }
 
-        @keyframes congrats-glow {
-            0% {
-                text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6);
-            }
-            100% {
-                text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.8), 0 0 80px rgba(255, 215, 0, 0.4);
-            }
+        .logout-btn {
+            padding: 10px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
-        @keyframes congrats-bounce {
-            0% {
-                transform: scale(0.3) translateY(-100px);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.1) translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: translateY(-1px);
         }
 
-        /* Enhanced Background Animations */
-        .floating-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .forum-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+        }
+
+        .main-forum {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-composer {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #ddd;
+        }
+
+        .composer-textarea {
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 15px;
         }
 
-        .floating-shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: float-around 20s infinite linear;
+        .composer-textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
         }
 
-        .floating-shape:nth-child(1) {
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-            animation-duration: 25s;
+        .post-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .floating-shape:nth-child(2) {
-            top: 70%;
-            left: 80%;
-            animation-delay: -5s;
-            animation-duration: 30s;
+        .post-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
         }
 
-        .floating-shape:nth-child(3) {
-            top: 30%;
-            left: 70%;
-            animation-delay: -10s;
-            animation-duration: 35s;
+        .post-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .floating-shape:nth-child(4) {
-            top: 80%;
-            left: 20%;
-            animation-delay: -15s;
-            animation-duration: 28s;
+        .posts-container {
+            space-y: 20px;
         }
 
-        @keyframes float-around {
-            0% {
-                transform: translateX(0) translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateX(100px) translateY(-50px) rotate(90deg);
-            }
-            50% {
-                transform: translateX(200px) translateY(100px) rotate(180deg);
-            }
-            75% {
-                transform: translateX(-100px) translateY(150px) rotate(270deg);
-            }
-            100% {
-                transform: translateX(0) translateY(0) rotate(360deg);
-            }
+        .post {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
         }
 
-        /* Enhanced Glow Effects */
-        .glow-effect {
-            position: relative;
+        .post:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
         }
 
-        .glow-effect::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
-            border-radius: inherit;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
-        .glow-effect:hover::before {
-            opacity: 0.7;
-            animation: glow-pulse 1.5s ease-in-out infinite;
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
         }
 
-        @keyframes glow-pulse {
-            0%, 100% {
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 1;
-            }
+        .post-meta {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .post-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .post-content {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .reply-btn {
+            color: #007bff;
+        }
+
+        .mention-btn {
+            color: #28a745;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar-title {
+            font-weight: 600;
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .notification {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .notification.mention {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+        }
+
+        .notification.reply {
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .online-users {
+            list-style: none;
+        }
+
+        .online-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .online-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+        }
+
+        .reply-form {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .reply-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            margin-bottom: 10px;
+        }
+
+        .reply-submit {
+            padding: 8px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .reply-cancel {
+            padding: 8px 15px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .main-title {
-                font-size: 2.5rem;
+            .forum-content {
+                grid-template-columns: 1fr;
             }
             
-            .friends-grid {
-                flex-direction: column;
-                align-items: center;
+            .user-welcome {
+                text-align: center;
+                gap: 15px;
             }
             
-            .friend-card {
-                min-width: 300px;
-            }
-            
-            .speech-section {
-                padding: 25px;
-            }
-            
-            .speech-text {
-                font-size: 1.1rem;
-            }
-
-            .audio-control {
-                bottom: 10px;
-                right: 10px;
-                left: 10px;
-                width: auto;
-            }
-
-            .audio-buttons {
-                flex-direction: column;
-            }
-
-            .congrats-text {
-                font-size: 2.5rem;
-            }
-
-            .congrats-subtext {
-                font-size: 1.2rem;
+            .login-box {
+                margin: 10px;
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Congratulations Banner -->
-    <div class="congrats-banner" id="congratsBanner">
-        <div>
-            <div class="congrats-text">🎓 Congratulations Class of 2025! 🎓</div>
-            <div class="congrats-subtext">Celebrating Your Amazing Journey at Northridge Middle School</div>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <h1 class="login-title">GC Forum</h1>
+            <p class="login-subtitle">Welcome to the Group Chat</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">Login</button>
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                <div id="successMessage" class="success-message" style="display: none;"></div>
+            </form>
         </div>
     </div>
 
-    <!-- Floating Background Shapes -->
-    <div class="floating-shapes">
-        <div class="floating-shape" style="font-size: 3rem; color: #ffd700;">🎓</div>
-        <div class="floating-shape" style="font-size: 2rem; color: #ffed4e;">⭐</div>
-        <div class="floating-shape" style="font-size: 2.5rem; color: #ffd700;">🏆</div>
-        <div class="floating-shape" style="font-size: 1.8rem; color: #ffed4e;">✨</div>
-    </div>
-
-    <div class="container">
-        <!-- Header Section -->
-        <div class="header">
-            <h1 class="main-title">Northridge Middle School GC Memories</h1>
-            <img src="https://cdn.discordapp.com/attachments/1370940722018123930/1382082671508848702/MS-Northridge_1.png?ex=6849dc4a&is=68488aca&hm=13bbc65c860a886aae2f99a5218e7adc9e6532b67c818fb07d103f398f124b9c&" 
-                 alt="Northridge Middle School Logo" 
-                 class="school-logo"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center;">
-                <p>🏫 NRMS Logo</p>
-                <p style="font-size:0.8em;">Image not loading - check URL</p>
+    <!-- Main Forum -->
+    <div id="forumPage" class="forum-container">
+        <div class="forum-header">
+            <div class="user-welcome">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <div class="user-details">
+                        <h2 id="welcomeMessage"></h2>
+                        <p class="user-status" id="userStatus"></p>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
 
-        <!-- Speech Section -->
-        <div class="speech-section">
-            <p class="speech-text">
-                Thank you all for these memories all these moments i loved every single moment rather it was arguments or when we had fun memories all of it were memories that we had threwout this school year from 6th to 8th grade althought we met in 7th grade we had these memories and been homeboys for about 2 years now and i hope we can keep being friends and i love you all
-            </p>
-        </div>
+        <div class="forum-content">
+            <div class="main-forum">
+                <div class="post-composer">
+                    <textarea id="postContent" class="composer-textarea" placeholder="What's on your mind?"></textarea>
+                    <button onclick="createPost()" class="post-btn" id="postBtn">Post Message</button>
+                </div>
+                
+                <div id="postsContainer" class="posts-container">
+                    <div class="loading">Loading posts...</div>
+                </div>
+            </div>
 
-        <!-- Friends Section -->
-        <div class="friends-section">
-            <h2 class="friends-title">All Friends</h2>
-            
-            <div class="friends-grid">
-                <!-- Darell's Card -->
-                <div class="friend-card glow-effect">
-                    <img src="https://cdn.discordapp.com/attachments/1370940722018123930/1382075660935233697/IMG_7613.jpg?ex=6849d5c3&is=68488443&hm=c0666fdd5de75ae96e425e2bbad376e6127cf9e6e26b316c35c080e1e0332f74&" 
-                         alt="Darell Goodwin The Second" 
-                         class="friend-image"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center; width:250px; height:300px; display:none; align-items:center; justify-content:center;">
-                        <div>
-                            <p>📷 Darell's Photo</p>
-                            <p style="font-size:0.8em;">Image not loading</p>
-                        </div>
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Notifications</h3>
+                    <div id="notificationsContainer">
+                        <p style="color: #666; font-size: 0.9rem;">No new notifications</p>
                     </div>
-                    <h3 class="friend-name">Darell Goodwin The Second</h3>
-                    <p class="friend-description">
-                        This is Darell one of my closest friends at northridge and one of my closest he has been the friend we had arguments with and had fun moments with but in the end we had so much fun together and ill miss him.
-                    </p>
                 </div>
 
-                <!-- Samy's Card -->
-                <div class="friend-card glow-effect">
-                    <img src="https://cdn.discordapp.com/attachments/1370940722018123930/1382075612721840290/BE638BCA-90B3-46E1-A700-A74A7FEC386C.jpg?ex=6849d5b7&is=68488437&hm=3f6b99c67d7673fae87e4e80c38dd26a4f9e674324a3cf3ce732c2dab572fd75&" 
-                         alt="Samy Kabeya" 
-                         class="friend-image"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center; width:250px; height:300px; align-items:center; justify-content:center;">
-                        <div>
-                            <p>📷 Samy's Photo</p>
-                            <p style="font-size:0.8em;">Image not loading</p>
-                        </div>
-                    </div>
-                    <h3 class="friend-name">Samy Kabeya</h3>
-                    <p class="friend-description">
-                        This is Samy Kabeya one of my closest friends and someone i had fun memories with and arguments with and in the end i enjoyed all those moments and ill miss him.
-                    </p>
-                </div>
-
-                <!-- Daniel's Card -->
-                <div class="friend-card glow-effect">
-                    <img src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/505439138_1427169858408032_2992013017824830275_n.jpg?stp=dst-jpg_p480x480_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=Mzreps1S3lQQ7kNvwG1zmXZ&_nc_oc=AdkVZrD6V5r_EkJrS-w7VdfxXrWGkWDLLZEaJuS0XkvPnKiHcf3u3XH9am517e5PM6n6vC4TdzT7CRPlsNuBBFiO&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD2gH_uJmQReSRRj0TkYehvcn3RImjWqxEYtUzGqRnf6Y9Lw&oe=686FE3A7" 
-                         alt="Devious Daniel" 
-                         class="friend-image"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center; width:250px; height:300px; align-items:center; justify-content:center;">
-                        <div>
-                            <p>📷 Daniel's Photo</p>
-                            <p style="font-size:0.8em;">Image not loading</p>
-                        </div>
-                    </div>
-                    <h3 class="friend-name">Devious Daniel</h3>
-                    <p class="friend-description">
-                        This is Daniel one of my close friends which im pretty sure i met in 6th grade hes a cool guy besides he got nutmegged by me in soccer like 3 years ago.
-                    </p>
-                </div>
-
-                <!-- Lyco's Card -->
-                <div class="friend-card glow-effect">
-                    <img src="https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/495073104_1817970472081076_2039929598899656029_n.jpg?stp=dst-jpg_p480x480_tt6&_nc_cat=111&ccb=1-7&_nc_sid=0024fc&_nc_ohc=m3GdTwXkFBsQ7kNvwGue1gU&_nc_oc=AdkAMXjOvMH4KQL6ePYRuYJiuIu_FiyP7ohEaEfftNwu4Fxr5bKULyVtYD2v_hBkzhLrEsTKDzDeZsSJjaZFYumX&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&oh=03_Q7cD2gHcun1JlKPqYaCn0aqagY9tCddNJgFuq15_y7i-jLeEgg&oe=68700EB5" 
-                         alt="Lyco" 
-                         class="friend-image"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div style="display:none; background:#f0f0f0; padding:20px; border-radius:15px; text-align:center; width:250px; height:300px; align-items:center; justify-content:center;">
-                        <div>
-                            <p>📷 Lyco's Photo</p>
-                            <p style="font-size:0.8em;">Image not loading</p>
-                        </div>
-                    </div>
-                    <h3 class="friend-name">Lyco</h3>
-                    <p class="friend-description">
-                        This is lyco he is one of my close friends i met in 8th grade i like his outfits and hes a cool guy overall.
-                    </p>
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Online Users</h3>
+                    <ul id="onlineUsers" class="online-users">
+                        <div class="loading">Loading users...</div>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Audio Control Panel -->
-    <div class="audio-control">
-        <div class="audio-status" id="audioStatus">🎵 Background Music</div>
-        <div class="audio-embed">
-            <iframe id="audioFrame" width="300" height="60" src="https://vocaroo.com/embed/1qsOxlcSlXhK?autoplay=0" frameborder="0" allow="autoplay"></iframe>
-        </div>
-        <div class="audio-buttons">
-            <button class="audio-btn" id="playBtn" onclick="playAudio()">▶️ Play</button>
-            <button class="audio-btn" id="pauseBtn" onclick="pauseAudio()" style="display:none;">⏸️ Pause</button>
-            <button class="audio-btn" id="muteBtn" onclick="toggleMute()">🔇 Mute</button>
-        </div>
-        <a href="https://voca.ro/1qsOxlcSlXhK" class="vocaroo-link" target="_blank">View on Vocaroo &gt;&gt;</a>
-    </div>
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import Firebase functions
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, onSnapshot, orderBy, query, serverTimestamp, doc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
-    <script>
-        // Confetti cursor trail effect
-        const colors = ['#ffd700', '#ffed4e', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd'];
-        const shapes = ['confetti-particle', 'confetti-star', 'confetti-triangle', 'confetti-square'];
-        
-        let mouseX = 0;
-        let mouseY = 0;
-        let isMouseMoving = false;
-        let confettiInterval;
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCcAWcyND-2emN-BzEOykH2ELVBRC6T_zo",
+            authDomain: "project-8186776965254731895.firebaseapp.com",
+            projectId: "project-8186776965254731895",
+            storageBucket: "project-8186776965254731895.firebasestorage.app",
+            messagingSenderId: "82061285209",
+            appId: "1:82061285209:web:bd7a2f6e4639567d6a1e48",
+            measurementId: "G-B7MBE4JJRW"
+        };
 
-        // Track mouse movement
-        document.addEventListener('mousemove', function(e) {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            if (!isMouseMoving) {
-                isMouseMoving = true;
-                startConfetti();
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // User database
+        const users = {
+            'Darell': { password: 'gcuser', status: 'Original GC Member', role: 'founder' },
+            'Samy': { password: 'gcuser', status: 'Original GC Member', role: 'founder' },
+            'Hector': { password: 'gcuser', status: 'GC Founder', role: 'founder' },
+            'Marlon': { password: 'gcuser', status: 'GC Founder', role: 'founder' },
+            'Mohy': { password: 'gcuser', status: 'GC Founder', role: 'founder' },
+            'Daniel': { password: 'gcuser', status: 'New GC Member', role: 'member' },
+            'Tristian': { password: 'gcuser', status: 'Old GC Member', role: 'member' }
+        };
+
+        // Global variables
+        let currentUser = null;
+        let unsubscribePosts = null;
+        let unsubscribeUsers = null;
+
+        // Initialize Firebase Auth
+        onAuthStateChanged(auth, (user) => {
+            if (user && currentUser) {
+                console.log('Firebase user authenticated:', user.uid);
             }
         });
 
-        // Stop confetti when mouse stops moving
-        document.addEventListener('mousemove', debounce(function() {
-            isMouseMoving = false;
-            stopConfetti();
-        }, 150));
-
-        function startConfetti() {
-            if (confettiInterval) return;
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            confettiInterval = setInterval(createConfetti, 50);
-        }
-
-        function stopConfetti() {
-            if (confettiInterval) {
-                clearInterval(confettiInterval);
-                confettiInterval = null;
-            }
-        }
-
-        function createConfetti() {
-            if (!isMouseMoving) return;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            const loginBtn = document.getElementById('loginBtn');
             
-            const confetti = document.createElement('div');
-            const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            // Disable login button
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Logging in...';
             
-            confetti.className = randomShape;
-            confetti.style.backgroundColor = randomColor;
-            confetti.style.left = (mouseX - 4) + 'px';
-            confetti.style.top = (mouseY - 4) + 'px';
-            
-            // Add some randomness to position
-            const offsetX = (Math.random() - 0.5) * 40;
-            const offsetY = (Math.random() - 0.5) * 40;
-            confetti.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-            
-            document.body.appendChild(confetti);
-            
-            // Remove confetti after animation
-            setTimeout(() => {
-                if (confetti.parentNode) {
-                    confetti.parentNode.removeChild(confetti);
+            try {
+                if (users[username] && users[username].password === password) {
+                    // Sign in anonymously to Firebase
+                    await signInAnonymously(auth);
+                    
+                    currentUser = {
+                        username: username,
+                        status: users[username].status,
+                        role: users[username].role
+                    };
+                    
+                    // Update user's online status
+                    await updateUserOnlineStatus(username, true);
+                    
+                    showForum();
+                    loadRealtimeData();
+                    
+                    errorDiv.style.display = 'none';
+                    successDiv.textContent = 'Login successful!';
+                    successDiv.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        successDiv.style.display = 'none';
+                    }, 2000);
+                } else {
+                    throw new Error('Invalid username or password');
                 }
-            }, 1500);
-        }
-
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        // Hide congratulations banner after animation
-        setTimeout(() => {
-            const banner = document.getElementById('congratsBanner');
-            if (banner) {
-                banner.style.display = 'none';
+            } catch (error) {
+                console.error('Login error:', error);
+                errorDiv.textContent = error.message || 'Login failed. Please try again.';
+                errorDiv.style.display = 'block';
+                successDiv.style.display = 'none';
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Login';
             }
-        }, 4000);
-
-        // Add staggered animation to friend cards
-        const friendCards = document.querySelectorAll('.friend-card');
-        friendCards.forEach((card, index) => {
-            card.style.animationDelay = `${1.5 + (index * 0.3)}s`;
         });
 
-        // Audio control variables
-        let isPlaying = false;
-        let isMuted = false;
-        const audioFrame = document.getElementById('audioFrame');
-        const playBtn = document.getElementById('playBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const muteBtn = document.getElementById('muteBtn');
-        const audioStatus = document.getElementById('audioStatus');
-
-        // Play audio function
-        function playAudio() {
-            if (!isPlaying) {
-                // Change iframe src to autoplay version
-                audioFrame.src = 'https://vocaroo.com/embed/1qsOxlcSlXhK?autoplay=1';
-                
-                playBtn.style.display = 'none';
-                pauseBtn.style.display = 'inline-block';
-                pauseBtn.classList.add('playing');
-                
-                audioStatus.textContent = '🎵 Now Playing...';
-                isPlaying = true;
+        async function updateUserOnlineStatus(username, isOnline) {
+            try {
+                const userRef = doc(db, 'users', username);
+                await updateDoc(userRef, {
+                    isOnline: isOnline,
+                    lastSeen: serverTimestamp()
+                }).catch(async (error) => {
+                    if (error.code === 'not-found') {
+                        // Create user document if it doesn't exist
+                        await addDoc(collection(db, 'users'), {
+                            username: username,
+                            isOnline: isOnline,
+                            lastSeen: serverTimestamp()
+                        });
+                    }
+                });
+            } catch (error) {
+                console.error('Error updating user status:', error);
             }
         }
 
-        // Pause audio function
-        function pauseAudio() {
-            if (isPlaying) {
-                // Change iframe src to non-autoplay version (effectively stops it)
-                audioFrame.src = 'https://vocaroo.com/embed/1qsOxlcSlXhK?autoplay=0';
-                
-                pauseBtn.style.display = 'none';
-                playBtn.style.display = 'inline-block';
-                pauseBtn.classList.remove('playing');
-                
-                audioStatus.textContent = '🎵 Background Music';
-                isPlaying = false;
-            }
+        function showForum() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('forumPage').style.display = 'block';
+            
+            // Set user info
+            document.getElementById('userAvatar').textContent = currentUser.username[0].toUpperCase();
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${currentUser.username}!`;
+            document.getElementById('userStatus').textContent = currentUser.status;
         }
 
-        // Toggle mute function
-        function toggleMute() {
-            if (!isMuted) {
-                audioFrame.style.display = 'none';
-                muteBtn.textContent = '🔊 Unmute';
-                muteBtn.style.background = 'linear-gradient(135deg, #ff6b6b, #ff8e8e)';
-                audioStatus.textContent = '🔇 Audio Muted';
-                isMuted = true;
-            } else {
-                audioFrame.style.display = 'block';
-                muteBtn.textContent = '🔇 Mute';
-                muteBtn.style.background = 'linear-gradient(135deg, #ffd700, #ffed4e)';
-                audioStatus.textContent = isPlaying ? '🎵 Now Playing...' : '🎵 Background Music';
-                isMuted = false;
-            }
-        }
-
-        // Auto-play on page load (with user interaction)
-        window.addEventListener('load', function() {
-            // Add click event to document to enable autoplay after user interaction
-            document.addEventListener('click', function() {
-                if (!isPlaying) {
-                    playAudio();
+        async function logout() {
+            try {
+                if (currentUser) {
+                    await updateUserOnlineStatus(currentUser.username, false);
                 }
-            }, { once: true });
-        });
-    </script>
-</body>
-</html>
+                
+                // Unsubscribe from real-time listeners
+                if (unsubscribePosts) unsubscribePosts();
+                if (unsubscribeUsers) unsubscribeUsers();
+                
+                currentUser = null;
+                document.getElementById('forumPage').style.display = 'none';
+                document.getElementById('loginPage').style.display = 'block';
+                document.getElementById('loginForm').reset();
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'none';
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        }
+
+        function loadRealtimeData() {
+            // Listen for real-time posts
+            const postsQuery = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+            unsubscribePosts = onSnapshot(postsQuery, (snapshot) => {
+                const posts = [];
+                snapshot.forEach((doc) => {
+                    posts.push({ id: doc.id, ...doc.data() });
+                });
+                renderPosts(posts);
+            }, (error) => {
+                console.error('Error loading posts:', error);
+                document.getElementById('postsContainer').innerHTML = '<p style="text-align: center; color: #e74c3c;">Error loading posts. Please refresh the page.</p>';
+            });
+
+            // Listen for online users
+            const usersQuery = query(collection(db, 'users'));
+            unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
+                const onlineUsers = [];
+                snapshot.forEach((doc) => {
+                    const userData = doc.data();
+                    if (userData.isOnline) {
+                        onlineUsers.push(userData.username);
+                    }
+                });
+                renderOnlineUsers(onlineUsers);
+            }, (error) => {
+                console.error('Error loading users:', error);
+                document.getElementById('onlineUsers').innerHTML = '<p style="color: #e74c3c;">Error loading users</p>';
+            });
+        }
+
+        async function createPost() {
+            const content = document.getElementById('postContent').value.trim();
+            const postBtn = document.getElementById('postBtn');
+            
+            if (!content) {
+                alert('Please write something before posting!');
+                return;
+            }
+            
+            if (!currentUser) {
+                alert('Please log in to post!');
+                return;
+            }
+            
+            postBtn.disabled = true;
+            postBtn.textContent = 'Posting...';
+            
+            try {
+                await addDoc(collection(db, 'posts'), {
+                    author: currentUser.username,
+                    content: content,
+                    timestamp: serverTimestamp(),
+                    replies: []
+                });
+                
+                document.getElementById('postContent').value = '';
+                
+                // Check for mentions
+                checkForMentions(content);
+            } catch (error) {
+                console.error('Error creating post:', error);
+                alert('Failed to create post. Please try again.');
+            } finally {
+                postBtn.disabled = false;
+                postBtn.textContent = 'Post Message';
+            }
+        }
+
+        function checkForMentions(content) {
+            const mentionRegex = /@(\w+)/g;
+            const matches = content.match(mentionRegex);
+            
+            if (matches) {
+                matches.forEach(match => {
+                    const username = match.substring(1);
+                    if (users[username] && username !== currentUser.username) {
+                        addNotification(`${currentUser.username} mentioned you in a post`, 'mention');
+                    }
+                });
+            }
+        }
+
+        async function addNotification(message, type) {
+            try {
+                await addDoc(collection(db, 'notifications'), {
+                    message: message,
+                    type: type,
+                    timestamp: serverTimestamp(),
+                    targetUser: currentUser.username
+                });
+            } catch (error) {
+                console.error('Error adding notification:', error);
+            }
+        }
+
+        function renderPosts(posts) {
+            const container = document.getElementById('postsContainer');
+            
+            if (posts.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">No posts yet. Be the first to share something!</p>';
+                return;
+            }
+            
+            container.innerHTML = posts.map(post => `
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">${post.author[0].toUpperCase()}</div>
+                        <div class="post-meta">
+                            <div class="post-author">${post.author}</div>
+                            <div class="post-time">${formatTime(post.timestamp)}</div>
+                        </div>
+                    </div>
+                    <div class="post-content">${post.content}</div>
+                    <div class="post-actions">
+                        <button class="action-btn reply-btn" onclick="showReplyForm('${post.id}')">Reply</button>
+                        <button class="action-btn mention-btn" onclick="mentionUser('${post.author}')">@ ${post.author}</button>
+                    </div>
+                    <div id="replyForm${post.id}" class="reply-form">
+                        <textarea class="reply-textarea" placeholder="Write your reply..." id="replyText${post.id}"></textarea>
+                        <button class="reply-submit" onclick="submitReply('${post.id}')">Reply</button>
+                        <button class="reply-cancel" onclick="hideReplyForm('${post.id}')">Cancel</button>
+                    </div>
+                    ${post.replies && post.replies.length > 0 ? `
+                        <div style="margin-top: 15px; padding-left: 20px; border-left: 3px solid #e0e0e0;">
+                            ${post.replies.map(reply => `
+                                <div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                                    <strong>${reply.author}:</strong> ${reply.content}
+                                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">${formatTime(reply.timestamp)}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderOnlineUsers(onlineUsers) {
+            const container = document.getElementById('onlineUsers');
+            
+            if (onlineUsers.length === 0) {
+                container.innerHTML = '<p style="color: #666; font-size: 0.9rem;">No users online</p>';
+                return;
+            }
+            
+            container.innerHTML = onlineUsers.map(username => `
+                <li class="online-user">
+                    <div class="online-indicator"></div>
+                    <span>${username}</span>
+                </li>
+            `).join('');
+        }
+
+        window.showReplyForm = function(postId) {
+            document.getElementById(`replyForm${postId}`).style.display = 'block';
+        }
+
+        window.hideReplyForm = function(postId) {
+            document.getElementById(`replyForm${postId}`).style.display = 'none';
+            document.getElementById(`replyText${postId}`).value = '';
+        }
+
+        window.submitReply = async function(postId) {
+            const replyText = document.getElementById(`replyText${postId}`).value.trim();
+            
+            if (!replyText) {
+                alert('Please write a reply!');
+                return;
+            }
+            
+            if (!currentUser) {
+                alert('Please log in to reply!');
+                return;
+            }
+            
+            try {
+                const postRef = doc(db, 'posts', postId);
+                await updateDoc(postRef, {
+                    replies: arrayUnion({
+                        author: currentUser.username,
+                        content: replyText,
+                        timestamp: new Date()
+                    })
+                });
+                
+                hideReplyForm(postId);
+                
+                // Add notification for the original post author
+                await addNotification(`${currentUser.username} replied to your post`, 'reply');
+            } catch (error) {
+                console.error('Error submitting reply:', error);
+                alert('Failed to submit reply. Please try again.');
+            }
+        }
+
+        window.mentionUser = function(username) {
+            const postContent = document.getElementById('postContent');
+            postContent.value += `@${username} `;
+            postContent.focus();
+        }
+
+        function formatTime(timestamp) {
+            if (!timestamp) return 'Just now';
+            
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            return `${days}d ago`;
+        }
+
+        // Make functions available globally
+        window.createPost = createPost;
