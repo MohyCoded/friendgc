@@ -530,7 +530,7 @@
     <script type="module">
         // Import Firebase functions
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, addDoc, onSnapshot, orderBy, query, serverTimestamp, doc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, onSnapshot, orderBy, query, serverTimestamp, doc, updateDoc, arrayUnion, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
         import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
         // Your Firebase configuration
@@ -597,7 +597,7 @@
                         role: users[username].role
                     };
                     
-                    // Update user's online status
+                    // Update user's online status - this is the key fix
                     await updateUserOnlineStatus(username, true);
                     
                     showForum();
@@ -624,24 +624,21 @@
             }
         });
 
+        // Fixed user status update function
         async function updateUserOnlineStatus(username, isOnline) {
             try {
                 const userRef = doc(db, 'users', username);
-                await updateDoc(userRef, {
+                // Use setDoc with merge: true to create or update the document
+                await setDoc(userRef, {
+                    username: username,
                     isOnline: isOnline,
                     lastSeen: serverTimestamp()
-                }).catch(async (error) => {
-                    if (error.code === 'not-found') {
-                        // Create user document if it doesn't exist
-                        await addDoc(collection(db, 'users'), {
-                            username: username,
-                            isOnline: isOnline,
-                            lastSeen: serverTimestamp()
-                        });
-                    }
-                });
+                }, { merge: true });
+                
+                console.log(`User ${username} status updated to ${isOnline ? 'online' : 'offline'}`);
             } catch (error) {
                 console.error('Error updating user status:', error);
+                // Don't throw error - let login continue even if status update fails
             }
         }
 
@@ -890,8 +887,3 @@
             if (minutes < 1) return 'Just now';
             if (minutes < 60) return `${minutes}m ago`;
             if (hours < 24) return `${hours}h ago`;
-            return `${days}d ago`;
-        }
-
-        // Make functions available globally
-        window.createPost = createPost;
